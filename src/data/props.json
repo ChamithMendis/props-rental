@@ -1,0 +1,103 @@
+[
+  {
+    "id": "prop_001",
+    "name": "Antique Chesterfield Sofa",
+    "category": "Furniture",
+    "description": "A stunning mid-century Chesterfield sofa in deep burgundy velvet. Perfect for period dramas, luxury brand shoots, or editorial photography. Well-maintained with no visible wear.",
+    "pricePerDay": 4500,
+    "pricePerHour": 800,
+    "quantity": 2,
+    "available": true,
+    "published": true,
+    "tags": ["vintage", "velvet", "luxury", "seating"],
+    "images": [
+      "https://lh3.googleusercontent.com/d/SAMPLE_ID_1",
+      "https://lh3.googleusercontent.com/d/SAMPLE_ID_2"
+    ],
+    "dimensions": "220cm W × 90cm D × 85cm H",
+    "weight": "45kg",
+    "color": "Burgundy",
+    "createdAt": "2024-04-01",
+    "updatedAt": "2024-04-18"
+  },
+  {
+    "id": "prop_002",
+    "name": "Industrial Edison Pendant Light",
+    "category": "Lighting",
+    "description": "A set of 3 Edison bulb pendant lights on an aged-copper fixture. Creates warm, moody atmosphere. Suitable for restaurant scenes, product shoots, and film sets.",
+    "pricePerDay": 2000,
+    "pricePerHour": 400,
+    "quantity": 5,
+    "available": true,
+    "published": true,
+    "tags": ["industrial", "warm", "ambiance", "set-of-3"],
+    "images": [
+      "https://lh3.googleusercontent.com/d/SAMPLE_ID_3"
+    ],
+    "dimensions": "Each globe: 15cm dia, cord: 120cm",
+    "weight": "3kg per set",
+    "color": "Copper / Amber",
+    "createdAt": "2024-04-02",
+    "updatedAt": "2024-04-18"
+  },
+  {
+    "id": "prop_003",
+    "name": "Vintage Brass Telephone",
+    "category": "Vintage",
+    "description": "Fully restored 1940s rotary dial telephone in polished brass. Works as a display prop. Ideal for period pieces, vintage-themed shoots, and nostalgic settings.",
+    "pricePerDay": 1500,
+    "pricePerHour": 300,
+    "quantity": 3,
+    "available": true,
+    "published": true,
+    "tags": ["1940s", "brass", "telephone", "period"],
+    "images": [
+      "https://lh3.googleusercontent.com/d/SAMPLE_ID_4"
+    ],
+    "dimensions": "28cm W × 22cm D × 18cm H",
+    "weight": "2kg",
+    "color": "Brass",
+    "createdAt": "2024-04-03",
+    "updatedAt": "2024-04-18"
+  },
+  {
+    "id": "prop_004",
+    "name": "Persian Silk Rug (6×4ft)",
+    "category": "Textiles",
+    "description": "Hand-woven Persian silk rug in rich jewel tones — deep teal, crimson and gold. Adds instant elegance to any set. Clean and in excellent condition.",
+    "pricePerDay": 3500,
+    "pricePerHour": 700,
+    "quantity": 1,
+    "available": false,
+    "published": true,
+    "tags": ["persian", "rug", "silk", "floor", "luxury"],
+    "images": [
+      "https://lh3.googleusercontent.com/d/SAMPLE_ID_5"
+    ],
+    "dimensions": "182cm × 122cm",
+    "weight": "8kg",
+    "color": "Teal / Crimson / Gold",
+    "createdAt": "2024-04-05",
+    "updatedAt": "2024-04-18"
+  },
+  {
+    "id": "prop_005",
+    "name": "Reclaimed Wood Dining Table",
+    "category": "Furniture",
+    "description": "Rustic reclaimed teak dining table with natural grain and character marks. Seats 6 comfortably. Great for food photography, lifestyle shoots, and rustic interiors.",
+    "pricePerDay": 5500,
+    "pricePerHour": 1000,
+    "quantity": 1,
+    "available": true,
+    "published": true,
+    "tags": ["rustic", "teak", "dining", "reclaimed"],
+    "images": [
+      "https://lh3.googleusercontent.com/d/SAMPLE_ID_6"
+    ],
+    "dimensions": "180cm W × 90cm D × 75cm H",
+    "weight": "65kg",
+    "color": "Natural Teak",
+    "createdAt": "2024-04-06",
+    "updatedAt": "2024-04-18"
+  }
+]
