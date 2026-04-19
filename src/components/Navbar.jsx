@@ -30,15 +30,7 @@ export default function Navbar() {
       <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%", maxWidth: 1280, margin: "0 auto" }}>
         {/* Logo */}
         <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10 }}>
-          <div style={{
-            width: 36, height: 36, borderRadius: "50%",
-            background: "var(--color-accent)",
-            display: "flex", alignItems: "center", justifyContent: "center",
-            color: "white", fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 16,
-          }}>K</div>
-          <span style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: "var(--color-text)" }}>
-            {SITE_CONFIG.businessName}
-          </span>
+          <img src="/logo.jpeg" alt={SITE_CONFIG.businessName} style={{ height: 44, width: "auto", objectFit: "contain" }} />
         </Link>
 
         {/* Desktop nav */}
