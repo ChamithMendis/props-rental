@@ -113,7 +113,7 @@ export default function HomePage({ props }) {
               {[
                 [published.length + "+", "Props Available"],
                 [published.filter(p => p.available).length + "", "Ready to Rent"],
-                ["Same Day", "Delivery Possible"],
+                ["Delivery", "Contact for Info"],
               ].map(([val, label]) => (
                 <div key={label}>
                   <div style={{ fontFamily: "var(--font-display)", fontSize: 28, fontWeight: 700, color: "white" }}>{val}</div>
