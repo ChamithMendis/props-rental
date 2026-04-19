@@ -209,3 +209,4 @@ src/
 | Analytics | Add [Vercel Analytics](https://vercel.com/analytics) (one line of code) |
 | Multiple admin users | Add Supabase Auth |
 | Custom domain | Add in Vercel dashboard → Domains |
+
