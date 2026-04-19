@@ -53,7 +53,7 @@ export default function Footer() {
               <a href={`mailto:${SITE_CONFIG.email}`} style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 14 }}>
                 <Mail size={15} /> {SITE_CONFIG.email}
               </a>
-              <a href="#" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 14 }}>
+              <a href="https://www.instagram.com/kasun_sanjana/" target="blank" style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 14 }}>
                 <Instagram size={15} /> {SITE_CONFIG.instagram}
               </a>
               <span style={{ display: "flex", alignItems: "center", gap: 10, fontSize: 14 }}>

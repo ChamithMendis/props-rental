@@ -3,13 +3,13 @@
 // ============================================================
 
 export const SITE_CONFIG = {
-  businessName: "StageProps",
+  businessName: "KARTZProps",
   tagline: "Premium Props for Every Scene",
-  phone: "+94 77 123 4567",
-  whatsapp: "94771234567",         // no + or spaces
-  email: "hello@stageprops.lk",
+  phone: "+94 77 089 0566",
+  whatsapp: "94770890566",         // no + or spaces
+  email: "kasunksn27@gmail.com",
   address: "Colombo, Sri Lanka",
-  instagram: "@stageprops.lk",
+  instagram: "@kasun_sanjana",
   adminPassword: "admin2024",      // Change before deploying!
 };
 
