@@ -35,7 +35,7 @@ export default function Navbar() {
             background: "var(--color-accent)",
             display: "flex", alignItems: "center", justifyContent: "center",
             color: "white", fontFamily: "var(--font-display)", fontWeight: 700, fontSize: 16,
-          }}>S</div>
+          }}>K</div>
           <span style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: "var(--color-text)" }}>
             {SITE_CONFIG.businessName}
           </span>
