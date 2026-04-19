@@ -1,33 +1,82 @@
-// ============================================================
-// Data Storage Utility
-// ============================================================
-// Props data is stored in localStorage so admin changes persist
-// without a backend. The initial seed comes from props.json.
-// On deployment, replace with Supabase/Firebase for multi-device sync.
-// ============================================================
+import { createClient } from "@supabase/supabase-js";
 
-import initialData from "../data/props.json";
+const supabase = createClient(
+  import.meta.env.VITE_SUPABASE_URL,
+  import.meta.env.VITE_SUPABASE_ANON_KEY
+);
 
-const STORAGE_KEY = "stageprops_inventory";
-
-export function loadProps() {
-  try {
-    const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored) return JSON.parse(stored);
-  } catch (e) {
-    console.warn("Could not load stored props, using defaults.", e);
-  }
-  return initialData;
+// Map DB row (snake_case) → app object (camelCase)
+function toApp(row) {
+  return {
+    id: row.id,
+    name: row.name,
+    category: row.category,
+    description: row.description,
+    pricePerDay: row.price_per_day,
+    pricePerHour: row.price_per_hour,
+    quantity: row.quantity,
+    available: row.available,
+    published: row.published,
+    tags: row.tags ?? [],
+    images: row.images ?? [],
+    dimensions: row.dimensions,
+    weight: row.weight,
+    color: row.color,
+    createdAt: row.created_at,
+    updatedAt: row.updated_at,
+  };
 }
 
-export function saveProps(props) {
-  try {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(props));
-    return true;
-  } catch (e) {
-    console.error("Could not save props.", e);
-    return false;
-  }
+// Map app object (camelCase) → DB row (snake_case)
+function toDB(prop) {
+  return {
+    id: prop.id,
+    name: prop.name,
+    category: prop.category,
+    description: prop.description,
+    price_per_day: prop.pricePerDay,
+    price_per_hour: prop.pricePerHour,
+    quantity: prop.quantity,
+    available: prop.available,
+    published: prop.published,
+    tags: prop.tags ?? [],
+    images: prop.images ?? [],
+    dimensions: prop.dimensions,
+    weight: prop.weight,
+    color: prop.color,
+    created_at: prop.createdAt,
+    updated_at: prop.updatedAt,
+  };
+}
+
+export async function loadProps() {
+  const { data, error } = await supabase
+    .from("props")
+    .select("*")
+    .order("created_at", { ascending: true });
+  if (error) throw error;
+  return data.map(toApp);
+}
+
+export async function saveProps(props) {
+  const rows = props.map(toDB);
+  const { error } = await supabase.from("props").upsert(rows, { onConflict: "id" });
+  if (error) throw error;
+  return true;
+}
+
+export async function saveProp(prop) {
+  const { error } = await supabase
+    .from("props")
+    .upsert(toDB(prop), { onConflict: "id" });
+  if (error) throw error;
+  return true;
+}
+
+export async function deleteProp(id) {
+  const { error } = await supabase.from("props").delete().eq("id", id);
+  if (error) throw error;
+  return true;
 }
 
 export function generateId() {
@@ -35,12 +84,7 @@ export function generateId() {
   return `prop_${num}`;
 }
 
-export function resetToDefaults() {
-  localStorage.removeItem(STORAGE_KEY);
-  return initialData;
-}
-
-// Export data as downloadable JSON (admin backup)
+// Export data as downloadable JSON backup
 export function exportData(props) {
   const blob = new Blob([JSON.stringify(props, null, 2)], {
     type: "application/json",

@@ -1,16 +1,29 @@
-import { useState, useCallback } from "react";
-import { loadProps, saveProps, generateId } from "../utils/storage";
+import { useState, useEffect, useCallback } from "react";
+import {
+  loadProps,
+  saveProps,
+  saveProp,
+  deleteProp as dbDeleteProp,
+  generateId,
+} from "../utils/storage";
 
 export function useProps() {
-  const [props, setProps] = useState(() => loadProps());
+  const [props, setPropsState] = useState([]);
+  const [loading, setLoading] = useState(true);
 
-  const persist = useCallback((updated) => {
-    setProps(updated);
-    saveProps(updated);
+  useEffect(() => {
+    loadProps()
+      .then(setPropsState)
+      .finally(() => setLoading(false));
+  }, []);
+
+  const persist = useCallback(async (updated) => {
+    setPropsState(updated);
+    await saveProps(updated);
   }, []);
 
   const addProp = useCallback(
-    (formData) => {
+    async (formData) => {
       const newProp = {
         id: generateId(),
         ...formData,
@@ -18,55 +31,73 @@ export function useProps() {
         createdAt: new Date().toISOString().slice(0, 10),
         updatedAt: new Date().toISOString().slice(0, 10),
       };
-      persist([...props, newProp]);
+      await saveProp(newProp);
+      setPropsState((prev) => [...prev, newProp]);
       return newProp;
     },
-    [props, persist]
+    []
   );
 
   const updateProp = useCallback(
-    (id, formData) => {
-      const updated = props.map((p) =>
+    async (id, formData) => {
+      setPropsState((prev) => {
+        const updated = prev.map((p) =>
+          p.id === id
+            ? {
+                ...p,
+                ...formData,
+                images: (formData.images || p.images || []).filter(Boolean),
+                updatedAt: new Date().toISOString().slice(0, 10),
+              }
+            : p
+        );
+        const changed = updated.find((p) => p.id === id);
+        if (changed) saveProp(changed);
+        return updated;
+      });
+    },
+    []
+  );
+
+  const deleteProp = useCallback(async (id) => {
+    await dbDeleteProp(id);
+    setPropsState((prev) => prev.filter((p) => p.id !== id));
+  }, []);
+
+  const toggleAvailability = useCallback((id) => {
+    setPropsState((prev) => {
+      const updated = prev.map((p) =>
         p.id === id
-          ? {
-              ...p,
-              ...formData,
-              images: (formData.images || p.images || []).filter(Boolean),
-              updatedAt: new Date().toISOString().slice(0, 10),
-            }
+          ? { ...p, available: !p.available, updatedAt: new Date().toISOString().slice(0, 10) }
           : p
       );
-      persist(updated);
-    },
-    [props, persist]
-  );
+      const changed = updated.find((p) => p.id === id);
+      if (changed) saveProp(changed);
+      return updated;
+    });
+  }, []);
 
-  const deleteProp = useCallback(
-    (id) => {
-      persist(props.filter((p) => p.id !== id));
-    },
-    [props, persist]
-  );
-
-  const toggleAvailability = useCallback(
-    (id) => {
-      const updated = props.map((p) =>
-        p.id === id ? { ...p, available: !p.available, updatedAt: new Date().toISOString().slice(0, 10) } : p
+  const togglePublished = useCallback((id) => {
+    setPropsState((prev) => {
+      const updated = prev.map((p) =>
+        p.id === id
+          ? { ...p, published: !(p.published !== false), updatedAt: new Date().toISOString().slice(0, 10) }
+          : p
       );
-      persist(updated);
-    },
-    [props, persist]
-  );
+      const changed = updated.find((p) => p.id === id);
+      if (changed) saveProp(changed);
+      return updated;
+    });
+  }, []);
 
-  const togglePublished = useCallback(
-    (id) => {
-      const updated = props.map((p) =>
-        p.id === id ? { ...p, published: !(p.published !== false), updatedAt: new Date().toISOString().slice(0, 10) } : p
-      );
-      persist(updated);
-    },
-    [props, persist]
-  );
-
-  return { props, addProp, updateProp, deleteProp, toggleAvailability, togglePublished, setProps: persist };
+  return {
+    props,
+    loading,
+    addProp,
+    updateProp,
+    deleteProp,
+    toggleAvailability,
+    togglePublished,
+    setProps: persist,
+  };
 }

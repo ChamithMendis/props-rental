@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(supabase --version)",
+      "Bash(winget install *)",
+      "Bash(scoop install *)",
+      "Bash(curl -L https://github.com/supabase/cli/releases/latest/download/supabase_windows_amd64.zip -o /tmp/supabase.zip)",
+      "Read(//tmp/**)",
+      "Bash(curl -fsSL \"https://github.com/supabase/cli/releases/download/v2.22.6/supabase_windows_amd64.zip\" -o /tmp/supabase_cli.zip -L)",
+      "Bash(curl -s \"https://api.github.com/repos/supabase/cli/releases/latest\")",
+      "Bash(curl -fsSL \"https://github.com/supabase/cli/releases/download/v2.90.0/supabase_windows_amd64.zip\" -o /tmp/supabase_cli.zip -L)",
+      "Bash(python3 -c \"import json,sys; r=json.load\\(sys.stdin\\); [print\\(a['name'],a['browser_download_url']\\) for a in r['assets'] if 'windows' in a['name'].lower\\(\\) or 'win' in a['name'].lower\\(\\)]\")",
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\);const r=JSON.parse\\(d\\);r.assets.filter\\(a=>a.name.toLowerCase\\(\\).includes\\('windows'\\)||a.name.toLowerCase\\(\\).includes\\('win'\\)\\).forEach\\(a=>console.log\\(a.name, a.browser_download_url\\)\\)\")",
+      "Bash(node -e \"const r=JSON.parse\\(require\\('fs'\\).readFileSync\\('/tmp/release.json','utf8'\\)\\);r.assets.filter\\(a=>a.name.match\\(/win/i\\)\\).forEach\\(a=>console.log\\(a.name,a.browser_download_url\\)\\)\")",
+      "Read(//c/Users/chamithm/**)",
+      "Bash(curl -fsSL \"https://github.com/supabase/cli/releases/download/v2.90.0/supabase_windows_amd64.tar.gz\" -o supabase_cli.tar.gz)",
+      "Bash(tar -xzf supabase_cli.tar.gz)",
+      "Bash(/c/Users/chamithm/supabase.exe --version)",
+      "Bash(/c/Users/chamithm/supabase.exe login *)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_4b68e269ecc61e49a4b20683d39f51dc9a677e73 /c/Users/chamithm/supabase.exe projects list)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_4b68e269ecc61e49a4b20683d39f51dc9a677e73 /c/Users/chamithm/supabase.exe link --project-ref ofkwsnklesjzsgtuwqbt)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_4b68e269ecc61e49a4b20683d39f51dc9a677e73 /c/Users/chamithm/supabase.exe db push)",
+      "Bash(SUPABASE_ACCESS_TOKEN=sbp_4b68e269ecc61e49a4b20683d39f51dc9a677e73 /c/Users/chamithm/supabase.exe projects api-keys --project-ref ofkwsnklesjzsgtuwqbt)"
+    ]
+  }
+}

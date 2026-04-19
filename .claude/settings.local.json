@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(vercel --version)",
+      "Bash(npm install *)",
+      "Bash(vercel whoami *)",
+      "Bash(vercel --prod --name kartzprops --yes)"
+    ]
+  }
+}

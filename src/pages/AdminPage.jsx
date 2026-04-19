@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { Plus, Edit2, Trash2, ToggleLeft, ToggleRight, LogOut, Download, Upload, Search, Package, AlertTriangle, Eye, EyeOff, HardDrive, Link2 } from "lucide-react";
 import PropForm from "../components/PropForm";
-import { exportData, importData, resetToDefaults } from "../utils/storage";
+import { exportData, importData } from "../utils/storage";
 import { supportsFileSystem, pickBackupFile, writeBackup } from "../utils/fileBackup";
 import { SITE_CONFIG } from "../config/site";
 
@@ -94,10 +94,16 @@ export default function AdminPage({ propsState, onLogout }) {
     e.target.value = "";
   };
 
-  const handleReset = () => {
-    if (window.confirm("Reset to default sample data? This will erase your current inventory.")) {
-      setProps(resetToDefaults());
-      showToast("Reset to defaults.");
+  const handleReset = async () => {
+    if (window.confirm("Reload inventory from database?")) {
+      try {
+        const { loadProps } = await import("../utils/storage");
+        const fresh = await loadProps();
+        setProps(fresh);
+        showToast("Inventory reloaded from database.");
+      } catch {
+        showToast("Could not reload from database.", "error");
+      }
     }
   };
 
@@ -422,7 +428,7 @@ export default function AdminPage({ propsState, onLogout }) {
             </span>
             <button onClick={handleReset}
               style={{ fontSize: 12, color: "var(--color-text-light)", background: "none", border: "none", cursor: "pointer" }}>
-              Reset to sample data
+              Reload from database
             </button>
           </div>
         </div>
