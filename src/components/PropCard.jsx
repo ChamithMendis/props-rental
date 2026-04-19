@@ -98,7 +98,7 @@ export default function PropCard({ prop }) {
 
         {/* Pricing */}
         <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-          {prop.pricePerDay && (
+          {prop.pricePerDay && prop.showPricePerDay !== false && (
             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
               <Calendar size={13} color="var(--color-accent)" />
               <span style={{ fontSize: 13, fontWeight: 500, color: "var(--color-accent)" }}>
@@ -107,7 +107,7 @@ export default function PropCard({ prop }) {
               </span>
             </div>
           )}
-          {prop.pricePerHour && (
+          {prop.pricePerHour && prop.showPricePerHour !== false && (
             <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
               <Clock size={13} color="var(--color-text-muted)" />
               <span style={{ fontSize: 13, fontWeight: 400, color: "var(--color-text-muted)" }}>

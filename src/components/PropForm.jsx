@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Plus, Trash2, Info, Upload } from "lucide-react";
+import { Plus, Trash2, Info, Upload, Eye, EyeOff } from "lucide-react";
 import { CATEGORIES, IMAGE_CONVENTION } from "../config/site";
 import { uploadToCloudinary } from "../utils/cloudinary";
 
@@ -8,7 +8,9 @@ const EMPTY_FORM = {
   category: "Furniture",
   description: "",
   pricePerDay: "",
+  showPricePerDay: true,
   pricePerHour: "",
+  showPricePerHour: true,
   quantity: 1,
   available: true,
   tags: "",
@@ -23,6 +25,8 @@ export default function PropForm({ initial, onSave, onCancel, mode = "add" }) {
     if (initial) {
       return {
         ...initial,
+        showPricePerDay: initial.showPricePerDay ?? true,
+        showPricePerHour: initial.showPricePerHour ?? true,
         tags: (initial.tags || []).join(", "),
         images: initial.images?.length ? initial.images : [""],
       };
@@ -68,7 +72,9 @@ export default function PropForm({ initial, onSave, onCancel, mode = "add" }) {
     const payload = {
       ...form,
       pricePerDay: Number(form.pricePerDay) || 0,
+      showPricePerDay: form.showPricePerDay,
       pricePerHour: Number(form.pricePerHour) || 0,
+      showPricePerHour: form.showPricePerHour,
       quantity: Number(form.quantity) || 1,
       tags: form.tags.split(",").map(t => t.trim()).filter(Boolean),
       images: form.images.filter(Boolean),
@@ -155,7 +161,23 @@ export default function PropForm({ initial, onSave, onCancel, mode = "add" }) {
 
       <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "1rem" }}>
         <div style={fieldStyle}>
-          <label style={labelStyle}>Price Per Day</label>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}>
+            <label style={{ ...labelStyle, marginBottom: 0 }}>Price Per Day</label>
+            <button type="button" onClick={() => set("showPricePerDay", !form.showPricePerDay)}
+              title={form.showPricePerDay ? "Visible on Browse page" : "Hidden on Browse page"}
+              style={{
+                display: "flex", alignItems: "center", gap: 4,
+                fontSize: 11, fontWeight: 500,
+                color: form.showPricePerDay ? "var(--color-accent)" : "var(--color-text-muted)",
+                background: form.showPricePerDay ? "var(--color-accent-light)" : "var(--color-surface-2)",
+                border: `1px solid ${form.showPricePerDay ? "rgba(139,94,60,0.3)" : "var(--color-border)"}`,
+                borderRadius: "var(--radius-sm)",
+                padding: "2px 8px",
+                cursor: "pointer",
+              }}>
+              {form.showPricePerDay ? <><Eye size={11} /> Show</> : <><EyeOff size={11} /> Hide</>}
+            </button>
+          </div>
           <input type="number" min="0" value={form.pricePerDay} onChange={e => set("pricePerDay", e.target.value)}
             placeholder="e.g. 4500"
             style={inputStyle}
@@ -164,7 +186,23 @@ export default function PropForm({ initial, onSave, onCancel, mode = "add" }) {
           />
         </div>
         <div style={fieldStyle}>
-          <label style={labelStyle}>Price Per Hour</label>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 5 }}>
+            <label style={{ ...labelStyle, marginBottom: 0 }}>Price Per Hour</label>
+            <button type="button" onClick={() => set("showPricePerHour", !form.showPricePerHour)}
+              title={form.showPricePerHour ? "Visible on Browse page" : "Hidden on Browse page"}
+              style={{
+                display: "flex", alignItems: "center", gap: 4,
+                fontSize: 11, fontWeight: 500,
+                color: form.showPricePerHour ? "var(--color-accent)" : "var(--color-text-muted)",
+                background: form.showPricePerHour ? "var(--color-accent-light)" : "var(--color-surface-2)",
+                border: `1px solid ${form.showPricePerHour ? "rgba(139,94,60,0.3)" : "var(--color-border)"}`,
+                borderRadius: "var(--radius-sm)",
+                padding: "2px 8px",
+                cursor: "pointer",
+              }}>
+              {form.showPricePerHour ? <><Eye size={11} /> Show</> : <><EyeOff size={11} /> Hide</>}
+            </button>
+          </div>
           <input type="number" min="0" value={form.pricePerHour} onChange={e => set("pricePerHour", e.target.value)}
             placeholder="e.g. 800"
             style={inputStyle}

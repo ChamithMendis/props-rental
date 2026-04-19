@@ -22,7 +22,11 @@ export default function ItemDetailPage({ propsState }) {
   }
 
   const images = prop.images?.length ? prop.images : [PLACEHOLDER];
-  const price = pricingMode === "day" ? prop.pricePerDay : prop.pricePerHour;
+  const showDay = prop.showPricePerDay !== false;
+  const showHour = prop.showPricePerHour !== false;
+  const availableModes = [showDay && "day", showHour && "hour"].filter(Boolean);
+  const activePricingMode = availableModes.includes(pricingMode) ? pricingMode : (availableModes[0] ?? "day");
+  const price = activePricingMode === "day" ? prop.pricePerDay : prop.pricePerHour;
   const message = encodeURIComponent(`Hi! I'm interested in renting: ${prop.name}\nCategory: ${prop.category}\nPlease let me know availability and details.`);
 
   const nextImg = () => setActiveImg((activeImg + 1) % images.length);
@@ -148,41 +152,45 @@ export default function ItemDetailPage({ propsState }) {
                 {prop.description}
               </p>
 
-              {/* Pricing toggle */}
-              <div style={{
-                background: "var(--color-surface-2)",
-                borderRadius: "var(--radius-md)",
-                padding: 4,
-                display: "flex",
-                marginBottom: "1rem",
-              }}>
-                {["day", "hour"].map(mode => (
-                  <button key={mode} onClick={() => setPricingMode(mode)} style={{
-                    flex: 1, padding: "8px",
-                    borderRadius: "var(--radius-sm)",
-                    fontSize: 13, fontWeight: 500,
-                    background: pricingMode === mode ? "var(--color-surface)" : "transparent",
-                    color: pricingMode === mode ? "var(--color-text)" : "var(--color-text-muted)",
-                    boxShadow: pricingMode === mode ? "var(--shadow-sm)" : "none",
-                    border: "none", cursor: "pointer",
-                    transition: "all 0.2s",
-                  }}>
-                    Per {mode === "day" ? "Day" : "Hour"}
-                  </button>
-                ))}
-              </div>
+              {/* Pricing toggle — only shown if both modes are enabled */}
+              {availableModes.length > 1 && (
+                <div style={{
+                  background: "var(--color-surface-2)",
+                  borderRadius: "var(--radius-md)",
+                  padding: 4,
+                  display: "flex",
+                  marginBottom: "1rem",
+                }}>
+                  {availableModes.map(mode => (
+                    <button key={mode} onClick={() => setPricingMode(mode)} style={{
+                      flex: 1, padding: "8px",
+                      borderRadius: "var(--radius-sm)",
+                      fontSize: 13, fontWeight: 500,
+                      background: activePricingMode === mode ? "var(--color-surface)" : "transparent",
+                      color: activePricingMode === mode ? "var(--color-text)" : "var(--color-text-muted)",
+                      boxShadow: activePricingMode === mode ? "var(--shadow-sm)" : "none",
+                      border: "none", cursor: "pointer",
+                      transition: "all 0.2s",
+                    }}>
+                      Per {mode === "day" ? "Day" : "Hour"}
+                    </button>
+                  ))}
+                </div>
+              )}
 
-              <div style={{
-                display: "flex", alignItems: "baseline", gap: 8,
-                marginBottom: "1.5rem",
-              }}>
-                <span style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 700, color: "var(--color-accent)" }}>
-                  Rs. {price?.toLocaleString() || "—"}
-                </span>
-                <span style={{ fontSize: 15, color: "var(--color-text-muted)" }}>
-                  / {pricingMode === "day" ? "day" : "hour"}
-                </span>
-              </div>
+              {availableModes.length > 0 && (
+                <div style={{
+                  display: "flex", alignItems: "baseline", gap: 8,
+                  marginBottom: "1.5rem",
+                }}>
+                  <span style={{ fontFamily: "var(--font-display)", fontSize: 36, fontWeight: 700, color: "var(--color-accent)" }}>
+                    Rs. {price?.toLocaleString() || "—"}
+                  </span>
+                  <span style={{ fontSize: 15, color: "var(--color-text-muted)" }}>
+                    / {activePricingMode === "day" ? "day" : "hour"}
+                  </span>
+                </div>
+              )}
 
               {/* Details */}
               <div style={{
