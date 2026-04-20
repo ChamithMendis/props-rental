@@ -31,6 +31,9 @@ export default function Navbar() {
         {/* Logo */}
         <Link to="/" style={{ display: "flex", alignItems: "center", gap: 10 }}>
           <img src="/logo.jpeg" alt={SITE_CONFIG.businessName} style={{ height: 44, width: "auto", objectFit: "contain" }} />
+          <span style={{ fontFamily: "var(--font-display)", fontSize: 20, fontWeight: 700, letterSpacing: "-0.02em", color: "var(--color-text)" }}>
+            {SITE_CONFIG.businessName}
+          </span>
         </Link>
 
         {/* Desktop nav */}
