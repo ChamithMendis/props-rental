@@ -127,9 +127,9 @@ export default function AdminLogin({ onLogin }) {
           </button>
         </form>
 
-        <p style={{ textAlign: "center", fontSize: 12, color: "var(--color-text-light)", marginTop: "1.5rem" }}>
+        {/* <p style={{ textAlign: "center", fontSize: 12, color: "var(--color-text-light)", marginTop: "1.5rem" }}>
           Default password is set in <code style={{ fontSize: 11, background: "var(--color-surface-2)", padding: "2px 6px", borderRadius: 4 }}>src/config/site.js</code>
-        </p>
+        </p> */}
       </div>
     </div>
   );
